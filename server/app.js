@@ -12,7 +12,7 @@ const pingRouter = require("./routes/ping")
 const app = express();
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost:27017/babyregistry", { useNewUrlParser: true }, err => 
+mongoose.connect("mongodb://localhost:27017/babyregistry", { useUnifiedTopology: true }, err => 
   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
 require('dotenv').config();
