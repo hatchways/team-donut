@@ -4,10 +4,16 @@ import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-import indexRouter from "./routes/index";
-import pingRouter from "./routes/ping";
+// import indexRouter from "./routes/index";
+// import pingRouter from "./routes/ping";
+const indexRouter = require("./routes/index")
+const pingRouter = require("./routes/ping")
 
-var app = express();
+const app = express();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, err => 
+  err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
 app.use(logger("dev"));
 app.use(json());
