@@ -15,6 +15,8 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, err => 
   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
+require('dotenv').config();
+
 app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
