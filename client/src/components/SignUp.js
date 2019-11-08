@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
-import babyFund from './babyFund.png';
+import babyFund from './images/babyFund.png';
 
 export default class SignUp extends Component {
     login = () => {
@@ -16,7 +16,7 @@ export default class SignUp extends Component {
             <div style={{display: 'flex'}}>
 
             <div className="col-lg-6">
-              <img src={babyFund} className="logo" />
+              <img src={babyFund} alt="" className="logo" />
       
               <form id="signup">
                 <h3 className="mb-5">Create an account</h3>
