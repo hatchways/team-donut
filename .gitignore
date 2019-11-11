@@ -2,3 +2,5 @@
 .env
 /.vscode
 yarn.lock
+server/.env
+server/package.json

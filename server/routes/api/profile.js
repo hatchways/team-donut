@@ -5,6 +5,8 @@ const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 const path = require( 'path' );
 
+require('dotenv').config();
+
 /**
  * express.Router() creates modular, mountable route handlers
  * A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a “mini-app”.
@@ -14,8 +16,8 @@ const router = express.Router();
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
- accessKeyId: 'AKIAQSY2CO7MHK5JK4VI',
- secretAccessKey: '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',
+ accessKeyId: process.env.ACCESS_KEY_ID,
+ secretAccessKey: process.env.SECRET_ACCESS_KEY,
  Bucket: 'babyregistry101'
 });
 /**
