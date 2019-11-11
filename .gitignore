@@ -4,3 +4,4 @@
 yarn.lock
 server/.env
 server/package.json
+profile.js
