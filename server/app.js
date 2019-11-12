@@ -1,16 +1,20 @@
 var createError = require('http-errors');
 var express = require('express');
+var config = require('config');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-
+var user = require('./routes/api/user');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
-
+var cors = require('cors');
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/babyregistry", { useNewUrlParser: true }, err => 
+//connecting string is saved in config folder inside default.json
+var db = config.get('mongoConn');
+
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
 // view engine setup
@@ -22,9 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
+app.use('/api/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,5 +47,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//listening to this port 
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {console.log('server started')});
 
 module.exports = app;
