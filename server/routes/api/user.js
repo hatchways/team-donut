@@ -53,7 +53,7 @@ router.post('/register',
     });
 
 //api for login 
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
 
     const { email, password } = req.body;
 
@@ -62,7 +62,13 @@ router.get('/login', async (req, res, next) => {
             next(err);
         } else {
             if (bcrypt.compareSync(password, userInfo.password)) {
-                const token = jwt.sign({ id: userInfo._id }, config.get('jwtSecret'), { expiresIn: '1h' });
+                const payload = {
+                    user: {
+                        id: userInfo.id,
+                        name: userInfo.name
+                    }
+                };
+                const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '1h' });
                 res.json({ status: 'success', data: { id: userInfo._id, name: userInfo.name, email: userInfo.email, token } });
             } else {
                 res.json({ status: 'error', message: "Invalid Username/Password", data: null });

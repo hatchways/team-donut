@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var user = require('./routes/api/user');
+var fund = require('./routes/api/controller/fund');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
 var cors = require('cors');
@@ -14,7 +15,7 @@ var app = express();
 //connecting string is saved in config folder inside default.json
 var db = config.get('mongoConn');
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, err =>
   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
 // view engine setup
@@ -31,14 +32,15 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
 app.use('/api/user', user);
+app.use('/api/fund', fund);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -50,6 +52,6 @@ app.use(function(err, req, res, next) {
 
 //listening to this port 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {console.log('server started')});
+app.listen(PORT, () => { console.log('server started') });
 
 module.exports = app;

@@ -1,25 +1,28 @@
 const mongoose = require('mongoose');
 
 const FundSchema = mongoose.Schema({
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'user'
+        ref: 'user'
     },
-    name:{
-        type: String,
-        required:true
-    },
-    description:{
+    name: {
         type: String,
         required: true
     },
-    goal:{
+    description: {
         type: String,
         required: true
     },
-    deadline:{
+    goal: {
+        type: String,
+        required: true
+    },
+    deadline: {
         type: Date,
         default: Date.now
+    },
+    url: {
+        type: String
     }
 });
 
