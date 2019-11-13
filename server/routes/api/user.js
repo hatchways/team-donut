@@ -18,6 +18,8 @@ router.post('/register',
             return res.status(400).json({ errors: errors.array() });
         }
         const { name, email, password } = req.body;
+        console.log(req.body);
+        
 
         try {
             let user = await userModel.findOne({ email });

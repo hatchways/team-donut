@@ -11,11 +11,18 @@ var pingRouter = require('./routes/ping');
 var cors = require('cors');
 var app = express();
 
-//connecting string is saved in config folder inside default.json
-var db = config.get('mongoConn');
+require('dotenv').config();
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
-  err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
+//connecting string is saved in config folder inside default.json
+// var db = config.get('mongoConn');
+
+// mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
+//   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
+
+mongoose.connect(
+  process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
+  err ? console.log('Error: ', err) : console.log('MongoDB is connected!')
+)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,7 +56,7 @@ app.use(function(err, req, res, next) {
 });
 
 //listening to this port 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {console.log('server started')});
+// const PORT = process.env.PORT || 3001;
+// app.listen(PORT, () => {console.log('server started')});
 
 module.exports = app;

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import './App.css';
-import babyFund from './babyFund.png';
+import '../App.css';
+import babyFund from './images/babyFund.png';
 import axios from 'axios';
+import { signup, login } from '../redux/actions/authActions';
+import { connect } from 'react-redux';
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   constructor() {
     super();
     this.state = {
@@ -28,10 +30,11 @@ export default class SignUp extends Component {
       password: this.state.password
     }
 
-    axios.post('http://localhost:4000/api/user/register', user)
-      .then(res => {
-        console.log(res);
-      });
+    this.props.signup(user) 
+  }
+
+  login = () => {
+    window.location.href = "/"
   }
 
   render() {
@@ -65,7 +68,7 @@ export default class SignUp extends Component {
             </label>
             <br />
 
-            <button type="submit" className="btn btn-dark login" >Create</button>
+            <button type="submit" className="btn btn-dark login">Create</button>
           </form>
         </div>
 
@@ -77,3 +80,9 @@ export default class SignUp extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  user: state.auth_state
+})
+
+export default connect(mapStateToProps, { signup, login })(SignUp)
