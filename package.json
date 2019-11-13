@@ -1,0 +1,45 @@
+{
+  "name": "react-node-boilerplate",
+  "version": "1.0.0",
+  "description": "A React Js and Node Js boilerplate for building a new project. It uses create-react-app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client-install": "npm install --prefix client",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "engines": {
+    "node": "10.10.0"
+  },
+  "author": "Imran Sayed",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.568.0",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.6",
+    "jquery": "^3.4.1",
+    "mongoose": "^5.7.9",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "path": "^0.12.7",
+    "url": "^0.11.0",
+    "validator": "^10.8.0",
+    "bcrypt": "^3.0.6",
+    "config": "^3.2.4",
+    "core-util-is": "^1.0.2",
+    "debug": "~2.6.9",
+    "ejs": "^2.5.9",
+    "express-validator": "^6.2.0",
+    "http-errors": "~1.6.2",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
