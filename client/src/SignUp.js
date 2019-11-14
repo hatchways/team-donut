@@ -4,22 +4,22 @@ import babyFund from './babyFund.png';
 import axios from 'axios';
 
 export default class SignUp extends Component {
-  constructor() {
+  constructor(){
     super();
-    this.state = {
-      name: '',
-      email: '',
-      password: ''
-    };
+    this.state={
+    name : '',
+    email : '',
+    password : ''
+  };
   }
 
-  handleChange = event => {
+  handleChange = event =>{
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit = event => {
+  handleSubmit = event =>{
     event.preventDefault();
 
     const user = {
@@ -29,9 +29,9 @@ export default class SignUp extends Component {
     }
 
     axios.post('http://localhost:4000/api/user/register', user)
-      .then(res => {
-        console.log(res);
-      });
+        .then(res=>{
+          console.log(res);
+        });
   }
 
   render() {
@@ -46,17 +46,17 @@ export default class SignUp extends Component {
 
             <div className="form-group">
               <label>Your name</label>
-              <input type="text" className="form-control" name="name" onChange={this.handleChange} value={this.state.name} />
+              <input type="text" className="form-control" name="name" onChange={this.handleChange} value={this.state.name}/>
             </div>
 
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" className="form-control" name="email" onChange={this.handleChange} value={this.state.email} />
+              <input type="email" className="form-control" name="email" onChange={this.handleChange} value={this.state.email}/>
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" className="form-control" name="password" onChange={this.handleChange} value={this.state.password} />
+              <input type="password" className="form-control" name="password" onChange={this.handleChange} value={this.state.password}/>
             </div>
 
             <input type="checkbox" style={{ marginRight: '3px' }} />
