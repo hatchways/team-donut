@@ -1,19 +1,20 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './LogIn';
-import SignUp from './SignUp';
-import PswdRecover from './PswdRecover';
+import React from "react";
+import { MuiThemeProvider } from "@material-ui/core";
+import { BrowserRouter, Route } from "react-router-dom";
 
-export default class App extends Component {
-    render() {
-        return (
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route exact path="/signup" component={SignUp} />
-                    <Route exact path="/forgotpswd" component={PswdRecover} />
-                </Switch>
-            </Router>
-        )
-    }
+import { theme } from "./themes/theme";
+import LandingPage from "./pages/Landing";
+
+import "./App.css";
+
+function App() {
+  return (
+    <MuiThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Route path="/" component={LandingPage} />
+      </BrowserRouter>
+    </MuiThemeProvider>
+  );
 }
+
+export default App;
