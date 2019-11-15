@@ -13,15 +13,15 @@ var cors = require('cors');
 var app = express();
 
 //connecting string is saved in config folder inside default.json
-var db = config.get('mongoConn');
+// var db = config.get('mongoConn');
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
-  err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
+// mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
+//   err ? console.log('Error: ', err) : console.log('MongoDB is connected!'));
 
-// mongoose.connect(
-//   process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
-//   err ? console.log('Error: ', err) : console.log('MongoDB is connected!')
-// )
+mongoose.connect(
+  process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, err => 
+  err ? console.log('Error: ', err) : console.log('MongoDB is connected!')
+)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

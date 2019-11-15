@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 export class MyProfile extends Component {
+
     render() {
         return (
             <div>
@@ -9,6 +10,7 @@ export class MyProfile extends Component {
             </div>
         )
     }
+    
 }
 
 const mapStateToProps = (state) => ({

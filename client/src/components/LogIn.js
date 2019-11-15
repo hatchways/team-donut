@@ -2,16 +2,11 @@ import React, { Component } from 'react'
 import '../App.css';
 import babyFund from './images/babyFund.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { login } from '../redux/actions/authActions';
+import { connect } from 'react-redux';
 
-export default class LogIn extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
+class Login extends Component {
+  state = {}
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -25,18 +20,11 @@ export default class LogIn extends Component {
       password: this.state.password
     }
 
-    axios.post('http://localhost:3001/routes/api/user/login', userData)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(JSON.stringify(err)))
-  }
-  signup = () => {
-    window.location.href = "/signup"
+    this.props.login(userData)
   }
 
-  loggedin = () => {
-    console.log('logged in!')
+  signup = () => {
+    window.location.href = "/signup"
   }
 
   render() {
@@ -51,18 +39,18 @@ export default class LogIn extends Component {
 
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" className="form-control" name='email' onChange={this.handleChange} value={this.state.email} placeholder="Enter email" />
+              <input type="email" className="form-control" name='email' onChange={this.handleChange} placeholder="Enter email" />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" className="form-control" name='password' onChange={this.handleChange} value={this.state.password} placeholder="Password" />
+              <input type="password" className="form-control" name='password' onChange={this.handleChange} placeholder="Password" />
             </div>
 
             <Link to="/forgotpswd" style={{ color: 'black' }}>Forgot Password?</Link>
             <br />
 
-            <button type="submit" className="btn btn-dark login" onClick={this.loggedin}>Log In</button>
+            <button type="submit" className="btn btn-dark login">Log In</button>
           </form>
         </div>
 
@@ -74,4 +62,10 @@ export default class LogIn extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  user: state.auth_state
+})
+
+export default connect(mapStateToProps, { login })(Login)
 

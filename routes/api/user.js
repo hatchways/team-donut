@@ -18,14 +18,13 @@ router.post('/register',
             return res.status(400).json({ errors: errors.array() });
         }
         const { name, email, password } = req.body;
-
+        
         try {
             let user = await userModel.findOne({ email });
 
             if (user) {
                 return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
             }
-
 
             user = new userModel({
                 name,
@@ -53,9 +52,11 @@ router.post('/register',
     });
 
 //api for login 
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
 
     const { email, password } = req.body;
+    console.log(req.body);
+    
 
     await userModel.findOne({ email }, function (err, userInfo) {
         if (err) {

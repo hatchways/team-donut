@@ -42,6 +42,10 @@ class NewFund extends Component {
         open: false
     }
 
+    // componentDidMount() {
+    //     this.state.user()
+    // }
+
     MaterialUIPickers = () => {
         // The first commit of Material-UI
         const setSelectedDate = React.useState(new Date());

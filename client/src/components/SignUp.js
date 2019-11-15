@@ -2,18 +2,11 @@ import React, { Component } from 'react'
 import '../App.css';
 import babyFund from './images/babyFund.png';
 import axios from 'axios';
-import { signup, login } from '../redux/actions/authActions';
+import { signup } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 
 class SignUp extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      email: '',
-      password: ''
-    };
-  }
+  state = {}
 
   handleChange = event => {
     this.setState({
@@ -30,7 +23,8 @@ class SignUp extends Component {
       password: this.state.password
     }
 
-    this.props.signup(user) 
+    this.props.signup(user)  
+
   }
 
   login = () => {
@@ -38,6 +32,8 @@ class SignUp extends Component {
   }
 
   render() {
+    console.log(this.props.user);
+    
     return (
       <div style={{ display: 'flex' }}>
 
@@ -49,17 +45,17 @@ class SignUp extends Component {
 
             <div className="form-group">
               <label>Your name</label>
-              <input type="text" className="form-control" name="name" onChange={this.handleChange} value={this.state.name} />
+              <input type="text" className="form-control" name="name" onChange={this.handleChange} />
             </div>
 
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" className="form-control" name="email" onChange={this.handleChange} value={this.state.email} />
+              <input type="email" className="form-control" name="email" onChange={this.handleChange} />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" className="form-control" name="password" onChange={this.handleChange} value={this.state.password} />
+              <input type="password" className="form-control" name="password" onChange={this.handleChange} />
             </div>
 
             <input type="checkbox" style={{ marginRight: '3px' }} />
@@ -67,8 +63,7 @@ class SignUp extends Component {
               By signing up I agree with <span style={{ color: 'black' }}>terms and conditions</span>
             </label>
             <br />
-
-            <button type="submit" className="btn btn-dark login" onClick={this.handleSubmit}>Create</button>
+            <button type="submit" className="btn btn-dark login" onClick={this.handleSubmit}>Create</button>   
           </form>
         </div>
 
@@ -85,4 +80,4 @@ const mapStateToProps = (state) => ({
   user: state.auth_state
 })
 
-export default connect(mapStateToProps, { signup, login })(SignUp)
+export default connect(mapStateToProps, { signup })(SignUp)

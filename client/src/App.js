@@ -15,11 +15,13 @@ import './App.css';
 
 export default class App extends Component {
     render() {
+        const token = localStorage.getItem('token');
+
         return (
             <Provider store={store}>
                 <Router>
                     <div>
-                        {/* <Header /> */}
+                        {token ? <Header /> : ''}
                         <Switch>
                             <Route exact path="/" component={Login} />
                             <Route exact path="/signup" component={SignUp} />

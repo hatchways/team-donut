@@ -2,18 +2,15 @@ import React, { Component } from 'react'
 import babyFund from './images/babyFund.png'
 import noUser from './images/noUser.gif'
 import './Header.css'
+import { connect } from 'react-redux' 
+import { logout } from '../redux/actions/authActions'
 
-export default class Header extends Component {
-
-    newFund = () => {
-        window.location.href = "/newfund"
-    }
-
+class Header extends Component {
     render() {
         return (
             <div className="heading">
                 <img src={babyFund} alt="" />
-                <ul className="nav" style={{alignItems: 'center', position: 'absolute', right: '0', top: '1rem'}}>
+                <ul className="nav" style={{alignItems: 'center', position: 'absolute', right: '0', top: '1rem', right: '2rem'}}>
                     <li className="nav-item">
                         <a className="nav-link active" href="/messages">Message</a>
                     </li>
@@ -24,14 +21,23 @@ export default class Header extends Component {
                         <a className="nav-link" href="/profiles">Browse Profiles</a>
                     </li>
                     <li className="nav-item">
-                        <button className="btn btn-outline-dark w-100 m-0" onClick={this.newFund}>Create New Fund</button>
+                        <a className="nav-link" href="/newfund">Create New Fund</a>
                     </li>
                     <li className="nav-item d-flex">
                         <img src={noUser} alt="" style={{width: '35px', height: '35px', marginLeft: '1rem'}} />
                         <a className="nav-link" href="/myprofile">My Profile</a>
+                    </li>
+                    <li className="nav-item">
+                        <button className="btn btn-outline-dark w-100 m-0" onClick={this.props.logout}>Log Out</button>
                     </li>
                 </ul>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    user: state.auth_state
+})
+
+export default connect(mapStateToProps, { logout })(Header)
