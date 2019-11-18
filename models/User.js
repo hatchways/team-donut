@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const Schema = mongoose.Schema;
 
 //Define a schema
 const UserSchema = new mongoose.Schema({
@@ -15,7 +16,11 @@ const UserSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    funds: [{
+        type: Schema.Types.ObjectId,
+        ref: 'fund'
+    }]
 });
 
 //hash user password before using into database
