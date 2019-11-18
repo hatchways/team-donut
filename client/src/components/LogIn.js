@@ -24,7 +24,7 @@ class Login extends Component {
   }
 
   signup = () => {
-    window.location.href = "/signup"
+    window.location.href = "/signUp"
   }
 
   render() {
@@ -47,7 +47,7 @@ class Login extends Component {
               <input type="password" className="form-control" name='password' onChange={this.handleChange} placeholder="Password" />
             </div>
 
-            <Link to="/forgotpswd" style={{ color: 'black' }}>Forgot Password?</Link>
+            <Link to="/forgotPassword" style={{ color: 'black' }}>Forgot Password?</Link>
             <br />
 
             <button type="submit" className="btn btn-dark login">Log In</button>

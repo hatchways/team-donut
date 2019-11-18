@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css';
 import babyFund from './images/babyFund.png';
-import axios from 'axios';
 import { signup } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 
@@ -24,7 +23,6 @@ class SignUp extends Component {
     }
 
     this.props.signup(user)  
-
   }
 
   login = () => {
@@ -60,7 +58,13 @@ class SignUp extends Component {
 
             <input type="checkbox" style={{ marginRight: '3px' }} />
             <label style={{ textTransform: 'capitalize' }}>
-              By signing up I agree with <span style={{ color: 'black' }}>terms and conditions</span>
+              By signing up I agree with &nbsp;
+              <a 
+                style={{ color: 'black', cursor: 'pointer' }} 
+                href="/termsConditions"
+                target="_blank">
+                  Terms and conditions
+              </a>
             </label>
             <br />
             <button type="submit" className="btn btn-dark login" onClick={this.handleSubmit}>Create</button>   

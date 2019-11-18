@@ -19,6 +19,7 @@ import Dropzone from './Dropzone';
 import axios from 'axios'
 import $ from 'jquery'
 import { signup, login } from '../redux/actions/authActions';
+import { photoApi } from '../redux/actions/photoActions';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
@@ -86,6 +87,7 @@ class NewFund extends Component {
                 }
             })
             .then( ( response ) => {
+                
                 if ( 200 === response.status ) {
                     // If file size is larger than expected.
                     if( response.data.error ) {
@@ -100,7 +102,8 @@ class NewFund extends Component {
                     } else {
                         // Success
                         let fileName = response.data;
-                        this.ocShowAlert( 'Files Uploaded', '#3089cf' );
+                        this.props.photoApi(fileName.locationArray)                     
+                        this.ocShowAlert( `Files Uploaded`, '#3089cf' );
                     }
                 }
             })
@@ -218,7 +221,7 @@ class NewFund extends Component {
                     {/* For Alert box */}
 				    <div id="oc-alert-container"></div>
 
-                    <button className="btn btn-dark submitFund" onClick={this.singleFileUploadHandler}>Submit Fund</button>
+                    <button className="btn btn-dark submitFund" onClick={this.multipleFileUploadHandler}>Submit Fund</button>
                 </div>{/* End fundbox */}
 
             </div>
@@ -230,4 +233,4 @@ const mapStateToProps = (state) => ({
     user: state.auth_state
 })
 
-export default connect(mapStateToProps, { signup, login })(NewFund)
+export default connect(mapStateToProps, { signup, login, photoApi })(NewFund)

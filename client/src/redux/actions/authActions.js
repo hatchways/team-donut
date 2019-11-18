@@ -20,15 +20,8 @@ export const signup = (newuser) => dispatch => {
         let userID = decoded.user.id;
         let msg;
         console.log(userID);
-        
-        window.location.href = "/"
-        
-        // localStorage.setItem('token', token)
 
-        // const tokenInStorage = localStorage.getItem('token');
-        // if(tokenInStorage) {
-        //     window.location.href = "/"
-        // }      
+        window.location.href = "/"      
             
         dispatch({
             type: "SIGN_UP",
@@ -36,7 +29,10 @@ export const signup = (newuser) => dispatch => {
             message: msg
         })
     })
-    .catch(err => console.log(JSON.stringify(err)))
+    .catch(err => {
+        console.log(err);      
+        console.log(JSON.stringify(err))
+    })
 
 }
 
@@ -50,6 +46,8 @@ export const login = (user) => dispatch => {
 
     Axios.post('/api/user/login', user, axiosConfig)
     .then(response => {
+        console.log(response);
+        
         const { token } = response.data.data
         setAuthJWT(token)
         localStorage.setItem('token', token)

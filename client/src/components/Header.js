@@ -15,17 +15,17 @@ class Header extends Component {
                         <a className="nav-link active" href="/messages">Message</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/myfunds">My Funds</a>
+                        <a className="nav-link" href="/funds">My Funds</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/profiles">Browse Profiles</a>
+                        <a className="nav-link" href="/profile">Browse Profiles</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/newfund">Create New Fund</a>
+                        <a className="nav-link" href="/newFund">Create New Fund</a>
                     </li>
                     <li className="nav-item d-flex">
                         <img src={noUser} alt="" style={{width: '35px', height: '35px', marginLeft: '1rem'}} />
-                        <a className="nav-link" href="/myprofile">My Profile</a>
+                        <a className="nav-link" href="/myProfile">My Profile</a>
                     </li>
                     <li className="nav-item">
                         <button className="btn btn-outline-dark w-100 m-0" onClick={this.props.logout}>Log Out</button>

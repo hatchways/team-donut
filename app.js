@@ -9,8 +9,11 @@ var user = require('./routes/api/user');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
 var profileRouter = require('./routes/api/profile');
+var fund = require('./routes/api/controller/fund');
 var cors = require('cors');
 var app = express();
+
+require('dotenv').config();
 
 //connecting string is saved in config folder inside default.json
 // var db = config.get('mongoConn');
@@ -38,6 +41,7 @@ app.use('/', indexRouter);
 app.use('/ping', pingRouter);
 app.use('/api/user', user);
 app.use('/api/profile', profileRouter);
+app.use('/api/fund', fund);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -18,13 +18,14 @@ router.post('/register',
             return res.status(400).json({ errors: errors.array() });
         }
         const { name, email, password } = req.body;
-        
+
         try {
             let user = await userModel.findOne({ email });
 
             if (user) {
                 return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
             }
+
 
             user = new userModel({
                 name,
@@ -55,15 +56,19 @@ router.post('/register',
 router.post('/login', async (req, res, next) => {
 
     const { email, password } = req.body;
-    console.log(req.body);
-    
 
     await userModel.findOne({ email }, function (err, userInfo) {
         if (err) {
             next(err);
         } else {
             if (bcrypt.compareSync(password, userInfo.password)) {
-                const token = jwt.sign({ id: userInfo._id }, config.get('jwtSecret'), { expiresIn: '1h' });
+                const payload = {
+                    user: {
+                        id: userInfo.id,
+                        name: userInfo.name
+                    }
+                };
+                const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '1h' });
                 res.json({ status: 'success', data: { id: userInfo._id, name: userInfo.name, email: userInfo.email, token } });
             } else {
                 res.json({ status: 'error', message: "Invalid Username/Password", data: null });
