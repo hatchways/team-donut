@@ -1,5 +1,5 @@
+//This code is of Fund-Model#10 branch
 const mongoose = require('mongoose');
-
 const FundSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,8 +21,8 @@ const FundSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    url: {
-        type: String
+    photo: {
+        type: [String]
     }
 });
 

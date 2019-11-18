@@ -51,7 +51,7 @@ app.use(function (err, req, res, next) {
 });
 
 //listening to this port 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => { console.log('server started') });
+// const PORT = process.env.PORT || 4000;
+// app.listen(PORT, () => { console.log('server started') });
 
 module.exports = app;

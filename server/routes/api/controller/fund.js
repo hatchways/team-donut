@@ -19,33 +19,35 @@ router.post('/create', auth, async (req, res) => {
         res.send(created);
     }
     catch (err) {
-        console.log(err.message);
-        res.status(500).send('Serve Error');
+        res.status(500).send('Server Error');
     }
 });
 
 //Update Fund
 router.put('/update', auth, async (req, res) => {
+
+    const { id, name, description, goal, deadline, photo } = req.body;
     try {
         //Finding the fund
-        let updateFund = await fundModel.findById({ user: req.user.id, _id: req.body.id });
+        let updateFund = await fundModel.findById({ user: req.user.id, _id: id });
+
         if (!updateFund) {
             return res.status(404).send('Fund not found');
         }
+
         //Update the found fund
-        const { id, name, description, goal, deadline } = req.body;
         updateFund = await fundModel.findByIdAndUpdate(
             { _id: id },
             {
                 name,
                 description,
                 goal,
-                deadline
+                deadline,
+                photo
             });
         res.send(updateFund);
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -58,7 +60,6 @@ router.get('/myfunds', auth, async (req, res) => {
         res.send(funds);
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -73,7 +74,6 @@ router.get('/myfunds/:id', auth, async (req, res) => {
         res.send(fund);
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).send('Server Error');
     }
 });
