@@ -22,11 +22,7 @@ const FundSchema = mongoose.Schema({
         default: Date.now
     },
     photo: {
-        type: [{
-            url:{
-                type:String
-            }
-        }]
+        type: [String]
     }
 });
 
