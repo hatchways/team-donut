@@ -6,14 +6,15 @@ const auth = require('../../../middleware/auth');
 //Create Fund
 router.post('/create', auth, async (req, res) => {
 
-    const { name, description, goal, deadline } = req.body;
+    const { name, description, goal, deadline, photo } = req.body;
     try {
         const createFund = new fundModel({
             user: req.user.id,
             name,
             description,
             goal,
-            deadline
+            deadline,
+            photo
         });
         const created = await createFund.save();
         res.send(created);
