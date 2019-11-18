@@ -4,62 +4,63 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require('config');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const {check, validationResult} = require('express-validator');
 
 //api for user registeration/creation
 router.post('/register',
-    [
-        check('name', 'Name is required').not().isEmpty(),
-        check('email', 'Please inlcude valid email').isEmail(),
-        check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
-    ], async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+[
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please inlcude valid email').isEmail(),
+    check('password', 'Please enter a password with 6 or more characters').isLength({min:6})
+], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array() });
+    }
+    const {name, email, password} = req.body;
+
+    try{
+        let user = await userModel.findOne({email});
+
+        if(user){
+            return res.status(400).json({errors: [{msg: 'User already exists'}]});
         }
-        const { name, email, password } = req.body;
+        
 
-        try {
-            let user = await userModel.findOne({ email });
+        user = new userModel({
+            name,
+            email,
+            password
+        });
+        await user.save();
 
-            if (user) {
-                return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
+        const payload = {
+            user: {
+                id:user.id,
+                name:user.name
             }
+        };
 
-
-            user = new userModel({
-                name,
-                email,
-                password
-            });
-            await user.save();
-
-            const payload = {
-                user: {
-                    id: user.id,
-                    name: user.name
-                }
-            };
-
-            jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '1h' },
-                (err, token) => {
-                    if (err) throw err;
-                    return res.status(200).json({ data: { name: user.name, email: user.email, token } });
-                });
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server error');
-        }
-    });
+        jwt.sign(payload, config.get('jwtSecret'),{expiresIn:'1h'},
+        (err, token)=>{
+            if(err) throw err;
+            return res.status(200).json({data:{user, token}});
+        });
+    }catch(err){
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
 
 //api for login 
 router.post('/login', async (req, res, next) => {
 
     const { email, password } = req.body;
 
-    await userModel.findOne({ email }, function (err, userInfo) {
-        if (err) {
+    await userModel.findOne({email}, function(err, userInfo){
+        if(err){
             next(err);
+
         } else {
             if (bcrypt.compareSync(password, userInfo.password)) {
                 const payload = {
