@@ -7,6 +7,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var user = require('./routes/api/user');
 var fund = require('./routes/api/controller/fund');
+var chat = require('./io');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
 var cors = require('cors');
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/ping', pingRouter);
 app.use('/api/user', user);
 app.use('/api/fund', fund);
+app.use('/api/chat', chat);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

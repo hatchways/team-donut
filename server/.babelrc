@@ -5,6 +5,8 @@
       {
         "exclude": ["transform-regenerator"]
       }
-    ]
+    ],
+     "env",
+    "stage-0"
   ]
 }
