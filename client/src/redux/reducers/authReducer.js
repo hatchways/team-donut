@@ -16,6 +16,10 @@ export default (state = initialState, action) => {
             return updated;
 
         case "LOG_IN": 
+            // let { name, email } = action.payload
+            // updated.name = name
+            console.log(action.payload);
+            
             updated.email = action.payload.email
             return updated;
 

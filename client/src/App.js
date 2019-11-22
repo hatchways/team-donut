@@ -12,6 +12,7 @@ import MyFunds from './components/MyFunds';
 import Profiles from './components/Profiles';
 import MyProfile from './components/MyProfile';
 import TermsConditions from './components/TermsConditions';
+import Details from './components/Details';
 import './App.css';
 
 export default class App extends Component {
@@ -33,6 +34,7 @@ export default class App extends Component {
                             <Route exact path="/profile" component={Profiles} />
                             <Route exact path="/myProfile" component={MyProfile} />
                             <Route exact path="/termsConditions" component={TermsConditions} />
+                            <Route exact path="/details/:id" component={Details} />
                         </Switch>
                     </div>
                 </Router>

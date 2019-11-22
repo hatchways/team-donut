@@ -1,6 +1,7 @@
 //This code is of Fund-Model#10 branch
 const mongoose = require('mongoose');
-const FundSchema = mongoose.Schema({
+
+const FundSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
