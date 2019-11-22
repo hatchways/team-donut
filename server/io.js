@@ -1,11 +1,11 @@
-const express = require('express');
 const chat = require('./listeners/chat');
 const jwt = require('jwtwebtoken');
-module.exports = function (io) {
+const config = require('config');
 
+module.exports = function (io) {
     io.use(function(socket, next){
         if (socket.handshake.query && socket.handshake.query.token){
-          jwt.verify(socket.handshake.query.token, 'SECRET_KEY', function(err, decoded) {
+          jwt.verify(socket.handshake.query.token, config.get('jwtSecret'), function(err, decoded) {
             if(err) return next(new Error('Authentication error'));
             socket.user = decoded;
             next();
