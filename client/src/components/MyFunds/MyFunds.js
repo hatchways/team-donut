@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getFundInfo } from '../redux/actions/fundActions'
+import { getFundInfo } from '../../redux/actions/fundActions'
 import './MyFunds.css'
 
 class MyFunds extends Component {
@@ -16,7 +16,6 @@ class MyFunds extends Component {
 
     render() {
         let { funds } = this.props.fund
-        console.log(funds);
 
         let fundsArr = funds.map((item, index) => {
             return (
@@ -38,7 +37,12 @@ class MyFunds extends Component {
                     style={{padding: '5px', borderRadius: '30px', width: '45%'}} 
                     placeholder="Search fund by name" 
                 />
-                <h2 id="fundHeading">My active funds&nbsp;<span style={{fontWeight: 'normal', fontSize: '1.5rem'}}>({funds.length})</span></h2>
+                <h2 id="fundHeading">
+                    My active funds&nbsp;
+                    <span style={{fontWeight: 'normal', fontSize: '1.5rem', color: '#AAA'}}>
+                        ({funds.length})
+                    </span>
+                </h2>
 
                 <ul id="fundContainer">
                     {fundsArr}

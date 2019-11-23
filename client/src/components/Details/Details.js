@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getFundInfo } from '../redux/actions/fundActions'
+import { getFundInfo } from '../../redux/actions/fundActions'
 import jwt_decode from 'jwt-decode'
-import ImageGallery from 'react-image-gallery'
 import './Details.css'
+import ReplaceImg from '../ImageGallery/ReplaceImg'
+import Thumbnails from '../ImageGallery/Thumbnails'
 
 class Details extends Component {
     state = {}
@@ -20,19 +21,11 @@ class Details extends Component {
         let location = window.location.href.split('/')
         let pageID = location[location.length-1]
 
-        var imgGallery = []
-
-        var images = []
-
-        var imgPiece = new Object()
-        imgPiece.original = images[0]
-        imgPiece.thumbnail = images[1]
-
-        imgGallery.push(imgPiece)
-        console.log(imgGallery);
-
         let chosen = funds.map(item => {
-            images = item.photo
+            // item.photo.map(pic => {
+            //     images.push(pic)
+            // })
+
             if(item._id === pageID) {
                 return (
                     <div key={item._id}>
@@ -41,7 +34,7 @@ class Details extends Component {
                             Created by&nbsp;
                             <a style={{color: '#168df5'}} href="/myProfile">{decoded.user.name}</a>
                         </p>
-                        <ImageGallery items={imgGallery} />
+                        <Thumbnails picArray={item.photo} />
                         <h3>Description</h3>
                         <p style={{fontWeight: 'normal'}}>{item.description}</p>
                     </div>
@@ -54,7 +47,7 @@ class Details extends Component {
         return (
             <div className="container" id="detailsContainer">
                 <div>{chosen}</div>
-                <div id="detailBtns" style={{display: 'flex', flexDirection: 'column'}}>
+                <div id="detailBtns" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <button>Go Live</button>
                     <button>Edit Profile</button>
                 </div>        

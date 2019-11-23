@@ -22,7 +22,6 @@ module.exports = {
                 newFunds.save()
                 .then(savedFund => {
                     user.funds.push(savedFund)
-
                     user.save()
                     .then(() => resolve(savedFund))
                     .catch(err => {

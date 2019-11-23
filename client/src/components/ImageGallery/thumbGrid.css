@@ -1,0 +1,6 @@
+#thumbnailGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 6rem);
+    grid-gap: 13px;
+    margin-top: 13px;
+}

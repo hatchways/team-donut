@@ -7,13 +7,13 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Dropzone from './Dropzone';
+import Dropzone from '../Dropzone/Dropzone';
 import axios from 'axios'
 import $ from 'jquery'
-import { signup, login } from '../redux/actions/authActions';
-import { fundApi } from '../redux/actions/fundActions';
+import { signup, login } from '../../redux/actions/authActions';
+import { fundApi } from '../../redux/actions/fundActions';
 import { connect } from 'react-redux';
-import TimePicker from './TimePicker';
+import TimePicker from '../TimePicker';
 
 var counter = 0;
 
@@ -111,6 +111,7 @@ class NewFund extends Component {
             // if file not selected throw error
             this.ocShowAlert( 'Please upload file', 'red' );
         }
+
     };
 
     submitForm = event => {
