@@ -14,4 +14,14 @@ router.post('/create/:id', (req, res) => {
     })
 });
 
+router.get('/fundinfo/:id', (req, res) => {
+    fundController.getFunds(req.params.id)
+    .then(fund => {
+        res.json(fund)
+    })
+    .catch(err => {
+        res.status(400).json(err)
+    })
+})
+
 module.exports = router;

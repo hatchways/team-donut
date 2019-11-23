@@ -5,15 +5,15 @@ import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Dropzone from './Dropzone';
+import Dropzone from '../Dropzone/Dropzone';
 import axios from 'axios'
 import $ from 'jquery'
-import { signup, login } from '../redux/actions/authActions';
-import { fundApi } from '../redux/actions/fundActions';
+import { signup, login } from '../../redux/actions/authActions';
+import { fundApi } from '../../redux/actions/fundActions';
 import { connect } from 'react-redux';
+import TimePicker from '../TimePicker';
 
 var counter = 0;
 
@@ -23,9 +23,9 @@ class NewFund extends Component {
         details: '',
         goal: '',
         date: '',
-        time: '',
         timeZone: '',
-        photos: []
+        photos: [],
+        dateToISOStr: ''
     }
 
     handleInput = (event) => {
@@ -36,39 +36,17 @@ class NewFund extends Component {
 
     handleDateChange = (event) => {
         let date = event.toString()
+        let datePt = date.split(' ').slice(0, 4).join(' ')
 
         let dateValue = document.getElementById('date-picker-dialog').value
         let selectedDate = date.split(' ').slice(0, 4).join(' ')
 
         let d = new Date(selectedDate)
-        dateValue = d.toLocaleDateString()      
+        dateValue = d.toLocaleDateString()   
 
         this.setState({
-            date: dateValue
-        })
-    }
-
-    handleTimeChange = (event) => { 
-        let date = event.toString()
-
-        let timeValue = document.getElementById('time-picker').value
-
-        let t = new Date(date)
-        let timeString = t.toLocaleTimeString()
-
-        let selectedTime = timeString.split('')
-        selectedTime.splice(4, 3)
-        let timeResult = selectedTime.join('')       
-
-        let hour = timeResult.split(':')[0]     
-        if(hour < 10) {
-            timeResult = '0' + timeResult
-        }
-
-        console.log(timeValue, timeResult)
-
-        this.setState({
-            time: timeResult
+            date: dateValue,
+            dateToISOStr: datePt
         })
     }
 
@@ -133,12 +111,13 @@ class NewFund extends Component {
             // if file not selected throw error
             this.ocShowAlert( 'Please upload file', 'red' );
         }
+
     };
 
     submitForm = event => {
         event.preventDefault();
-        this.props.fundApi(this.state) 
-        console.log(this.state);         
+        this.props.fundApi(this.state)   
+        window.location.href = "/funds"      
     }
 
     timeDropdown = () => {   
@@ -169,17 +148,6 @@ class NewFund extends Component {
 	};
 
     render() {
-        console.log(this.state.time)
-
-        // let ampm;
-        // let date = new Date()
-        // let hour = date.getHours()
-
-        // if(hour > 11) {
-        //     ampm = "PM"
-        // } else {
-        //     ampm = "AM"
-        // }
         
         return (
             <div>  
@@ -212,23 +180,14 @@ class NewFund extends Component {
                                     margin="normal"
                                     id="date-picker-dialog"
                                     format="MM/dd/yyyy"
-                                    value={!this.state.date ? this.selectedDate : this.state.date}
                                     onChange={this.handleDateChange}
+                                    value={!this.state.date ? this.selectedDate : this.state.date}                 
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
                                 />
-                                <KeyboardTimePicker
-                                    style={{border: '1px solid', maxHeight: '51.67px'}}
-                                    margin="normal"
-                                    id="time-picker"
-                                    format="hh:mm a"
-                                    value={!this.state.time ? this.selectedDate : this.state.time}
-                                    onChange={this.handleTimeChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
+                                <TimePicker timeChange={this.handleTimeChange} />
+                                
                                 <select id="timeZone" onChange={this.timeDropdown}>
                                     <option value="-1">Please select a time zone</option>
                                     <option value="HST">HST (Hawaii Standard Time)</option>
@@ -261,7 +220,7 @@ class NewFund extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth_state
+    fund: state.fund_state
 })
 
 export default connect(mapStateToProps, { signup, login, fundApi })(NewFund)

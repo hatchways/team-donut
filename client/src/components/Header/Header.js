@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import babyFund from './images/babyFund.png'
-import noUser from './images/noUser.gif'
+import babyFund from '../images/babyFund.png'
+import noUser from '../images/noUser.gif'
 import './Header.css'
 import { connect } from 'react-redux' 
-import { logout } from '../redux/actions/authActions'
+import { logout } from '../../redux/actions/authActions'
 
 class Header extends Component {
     render() {

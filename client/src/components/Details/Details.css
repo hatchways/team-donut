@@ -1,0 +1,17 @@
+#detailsContainer {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-gap: 40px;
+}
+
+#detailBtns button {
+    background-color: #efefef;
+    text-transform: capitalize;
+    padding: 10px;
+    color: #000000;
+    width: 70%;
+}
+
+#detailsContainer img {
+    background-color: #CCC;
+}

@@ -5,13 +5,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/LogIn';
 import SignUp from './components/SignUp';
 import PswdRecover from './components/PswdRecover';
-import Header from './components/Header';
-import NewFund from './components/NewFund';
+import Header from './components/Header/Header';
+import NewFund from './components/NewFund/NewFund';
 import Messages from './components/Messages';
-import MyFunds from './components/MyFunds';
+import MyFunds from './components/MyFunds/MyFunds';
 import Profiles from './components/Profiles';
 import MyProfile from './components/MyProfile';
 import TermsConditions from './components/TermsConditions';
+import Details from './components/Details/Details';
 import './App.css';
 
 export default class App extends Component {
@@ -33,6 +34,7 @@ export default class App extends Component {
                             <Route exact path="/profile" component={Profiles} />
                             <Route exact path="/myProfile" component={MyProfile} />
                             <Route exact path="/termsConditions" component={TermsConditions} />
+                            <Route exact path="/details/:id" component={Details} />
                         </Switch>
                     </div>
                 </Router>
