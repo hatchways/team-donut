@@ -22,7 +22,7 @@ class MyFunds extends Component {
                 <li key={item._id}>
                     <div>  
                         <div id="name"><h3>{item.name}</h3></div>                   
-                        <img src={item.photo[0]} />                      
+                        <img src={item.photo[0]} alt="" />                      
                     </div>
                     <div style={{backgroundColor: 'white'}}>
                         <button onClick={this.detailsPage.bind(this, item._id)}>Details</button>

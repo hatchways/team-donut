@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 var user = require('./routes/api/user');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
-var profileRouter = require('./routes/api/profile');
+// var profileRouter = require('./routes/api/profile');
+var userRouter = require('./routes/user');
 var fund = require('./routes/fund');
 var cors = require('cors');
 var app = express();
@@ -40,8 +41,9 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
 app.use('/api/user', user);
-app.use('/api/profile', profileRouter);
+// app.use('/api/profile', profileRouter);
 app.use('/fund', fund);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

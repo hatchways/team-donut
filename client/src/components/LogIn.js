@@ -32,7 +32,7 @@ class Login extends Component {
       <div style={{ display: 'flex' }}>
 
         <div className="col-lg-6">
-          <img src={babyFund} className="logo" />
+          <img src={babyFund} className="logo" alt="" />
 
           <form id="login" onSubmit={this.handleSubmit}>
             <h3 className="mb-5">Log In</h3>

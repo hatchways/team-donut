@@ -15,3 +15,37 @@
 #detailsContainer img {
     background-color: #CCC;
 }
+
+@media screen and (max-width: 991px) {
+    #detailsContainer {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-areas: 
+            "gallery"
+            "buttons"
+            "description";
+        grid-gap: 40px;
+    }
+
+    .buttons {
+        grid-area: buttons;
+        position: relative;
+        top: 20px;
+    }
+    
+    .description {
+        grid-area: description;
+        position: absolute;
+        bottom: -23rem;
+    }
+
+    .gallery {
+        grid-area: gallery;
+    }
+}
+
+@media screen and (max-width: 546px) {
+    .smallerPic {
+        width: 94vw !important;
+    }
+}

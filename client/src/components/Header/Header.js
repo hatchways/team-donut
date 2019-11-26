@@ -6,11 +6,52 @@ import { connect } from 'react-redux'
 import { logout } from '../../redux/actions/authActions'
 
 class Header extends Component {
+    state = {
+        toggleMenu: null
+    }
+
+    toggleMobileMenu = () => {
+        console.log('working');
+        
+        this.setState({
+            toggleMenu: !this.state.toggleMenu
+        })
+    }
+
     render() {
         return (
+            <div>
             <div className="heading">
                 <img src={babyFund} alt="" />
-                <ul className="nav" style={{alignItems: 'center', position: 'absolute', right: '0', top: '1rem', right: '2rem'}}>
+                <ul className="nav" style={{alignItems: 'center', position: 'absolute', top: '1rem', right: '2rem'}}>
+                    <li className="nav-item desktopNav">
+                        <a className="nav-link active" href="/messages">Message</a>
+                    </li>
+                    <li className="nav-item desktopNav">
+                        <a className="nav-link" href="/funds">My Funds</a>
+                    </li>
+                    <li className="nav-item desktopNav">
+                        <a className="nav-link" href="/profile">Browse Profiles</a>
+                    </li>
+                    <li className="nav-item desktopNav">
+                        <a className="nav-link" href="/newFund">Create New Fund</a>
+                    </li>
+                    <li className="nav-item desktopNav d-flex">
+                        <img className="profileImg" src={noUser} alt="" style={{width: '35px', height: '35px', marginLeft: '1rem'}} />
+                        <a className="nav-link mypage" href="/myProfile">My Profile</a>
+                    </li>
+                    <li className="nav-item desktopNav">
+                        <button className="btn btn-outline-dark w-100 m-0" onClick={this.props.logout}>Log Out</button>
+                    </li>
+                    <li className="mobileBtn">
+                        <button className="btn btn-outline-dark w-100 m-0" onClick={this.toggleMobileMenu}>
+                            <i className="fas fa-bars"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            {!this.state.toggleMenu ?
+                <ul className="nav mobileNav">
                     <li className="nav-item">
                         <a className="nav-link active" href="/messages">Message</a>
                     </li>
@@ -24,13 +65,14 @@ class Header extends Component {
                         <a className="nav-link" href="/newFund">Create New Fund</a>
                     </li>
                     <li className="nav-item d-flex">
-                        <img src={noUser} alt="" style={{width: '35px', height: '35px', marginLeft: '1rem'}} />
-                        <a className="nav-link" href="/myProfile">My Profile</a>
+                        {/* <img className="profileImg" src={noUser} alt="" style={{width: '35px', height: '35px', marginLeft: '1rem'}} /> */}
+                        <a className="nav-link mypage" href="/myProfile">My Profile</a>
                     </li>
                     <li className="nav-item">
-                        <button className="btn btn-outline-dark w-100 m-0" onClick={this.props.logout}>Log Out</button>
+                        <a className="nav-link" style={{cursor: 'pointer'}} onClick={this.props.logout}>Log Out</a>
                     </li>
-                </ul>
+                </ul> : ''
+            }
             </div>
         )
     }

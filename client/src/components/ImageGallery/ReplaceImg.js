@@ -5,8 +5,9 @@ export default class ReplaceImg extends Component {
         let { activeThumbnail } = this.props
 
         return (
-            <div style={styles}>
+            <div className="smallerPic" style={styles}>
                 <img 
+                    alt=""
                     src={activeThumbnail} 
                     style={{
                         width: '100%', 

@@ -14,3 +14,56 @@ a {
 img {
     border-radius: 40px;
 }
+
+.mobileBtn {
+    display: none;
+}
+
+@media screen and (max-width: 940px) {
+    .nav-item {
+        font-size: 0.9em;
+    }
+
+    .nav-item a {
+        padding: 0 0.9em;
+    }
+
+    .nav-item img {
+        margin-left: 0 !important;
+    }
+
+    .mypage {
+        position: relative;
+        top: 5px;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 940px) {
+    .mobileBtn {
+        display: block;
+    }
+
+    .mobileNav {
+        display: block;
+        position: absolute;
+        top: 5rem;
+        right: 1rem;
+        text-align: right;
+    }
+
+    .profileImg {
+        display: none;
+    }
+
+    .mypage {
+        display: none;
+    }
+
+    .desktopNav {
+        display: none;
+    }
+}

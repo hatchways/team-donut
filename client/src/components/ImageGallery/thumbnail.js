@@ -5,6 +5,7 @@ export default class Thumbnail extends Component {
         return (
             <div>
                 <img
+                    alt=""
                     src={this.props.imgUrl}
                     style={{
                         width: '100%',

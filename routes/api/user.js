@@ -13,6 +13,7 @@ router.post('/register',
         check('email', 'Please inlcude valid email').isEmail(),
         check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
     ], async (req, res) => {
+
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -25,7 +26,6 @@ router.post('/register',
             if (user) {
                 return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
             }
-
 
             user = new userModel({
                 name,
@@ -75,5 +75,6 @@ router.post('/login', async (req, res, next) => {
             }
         }
     });
+    
 });
 module.exports = router;

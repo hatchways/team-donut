@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReplaceImg from './ReplaceImg'
 import ThumbnailGrid from './ThumbnailGrid'
+import '../Details/Details.css'
 
 export default class Thumbnails extends Component {
     state = {
@@ -35,7 +36,7 @@ export default class Thumbnails extends Component {
         const { thumbnails } = this.state 
 
         return (
-            <div style={thumbnailStyles}>
+            <div style={thumbnailStyles} className="gallery">
                 <div style={{ flex: 1 }}>
                     {this.renderThumbnails()}                  
                     <ThumbnailGrid
@@ -49,9 +50,10 @@ export default class Thumbnails extends Component {
 }
 
 const thumbnailStyles = {
-    backgroundColor: '#DDD',
+    backgroundColor: '#FFF',
     display: 'flex',
-    margin: '1rem 0',
-    width: '80%',
-    height: '110vh'
+    marginTop: '1rem',
+    marginBottom: '0.4rem',
+    width: '44vw',
+    height: '71vh'
 }

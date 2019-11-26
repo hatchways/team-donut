@@ -1,4 +1,0 @@
-{
-    "mongoConn":"mongodb+srv://Man_user_01:rootroot@myfirstcluster-pwawk.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret" : "this is secret token you can put what ever you wish to"
-}
