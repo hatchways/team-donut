@@ -3,22 +3,34 @@ import babyFund from '../images/babyFund.png'
 import noUser from '../images/noUser.gif'
 import './Header.css'
 import { connect } from 'react-redux' 
-import { logout } from '../../redux/actions/authActions'
+import { login, logout } from '../../redux/actions/authActions'
+import jwt_decode from 'jwt-decode'
 
 class Header extends Component {
     state = {
-        toggleMenu: null
+        toggleMenu: false
+    }
+
+    componentDidMount() {
+        this.props.login()
     }
 
     toggleMobileMenu = () => {
-        console.log('working');
-        
-        this.setState({
-            toggleMenu: !this.state.toggleMenu
+        this.setState(prevState => ({
+            toggleMenu: !prevState.toggleMenu
+        }), () => {
+            if(!this.state.toggleMenu) {
+                this.setState({
+                    toggleMenu: false
+                })
+            }
         })
     }
 
     render() {
+        const token = localStorage.getItem('token');
+        const decoded = jwt_decode(token)
+
         return (
             <div>
             <div className="heading">
@@ -28,10 +40,10 @@ class Header extends Component {
                         <a className="nav-link active" href="/messages">Message</a>
                     </li>
                     <li className="nav-item desktopNav">
-                        <a className="nav-link" href="/funds">My Funds</a>
+                        <a className="nav-link" href={`/funds/${decoded.id}`}>My Funds</a>
                     </li>
                     <li className="nav-item desktopNav">
-                        <a className="nav-link" href="/profile">Browse Profiles</a>
+                        <a className="nav-link" href="/profiles">Browse Profiles</a>
                     </li>
                     <li className="nav-item desktopNav">
                         <a className="nav-link" href="/newFund">Create New Fund</a>
@@ -50,16 +62,16 @@ class Header extends Component {
                     </li>
                 </ul>
             </div>
-            {!this.state.toggleMenu ?
+            {this.state.toggleMenu ?
                 <ul className="nav mobileNav">
                     <li className="nav-item">
                         <a className="nav-link active" href="/messages">Message</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/funds">My Funds</a>
+                        <a className="nav-link" href={`/funds/${decoded.id}`}>My Funds</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/profile">Browse Profiles</a>
+                        <a className="nav-link" href="/profiles">Browse Profiles</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="/newFund">Create New Fund</a>
@@ -82,4 +94,4 @@ const mapStateToProps = (state) => ({
     user: state.auth_state
 })
 
-export default connect(mapStateToProps, { logout })(Header)
+export default connect(mapStateToProps, { login, logout })(Header)

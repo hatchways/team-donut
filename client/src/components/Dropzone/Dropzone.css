@@ -33,7 +33,6 @@
 .nameList {
     list-style-type: none;
     display: grid;
-    /* margin-top: 2rem; */
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: repeat(2, 1fr);
 }

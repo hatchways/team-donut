@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getFundInfo } from '../../redux/actions/fundActions'
-import jwt_decode from 'jwt-decode'
+import { user } from '../../redux/actions/profileActions'
+import { getFundDetails, handleServerEditApi, addPhotos } from '../../redux/actions/fundActions'
 import './Details.css'
 import Thumbnails from '../ImageGallery/Thumbnails'
+import EditDetails from '../Details/EditDetails'
+import jwt_decode from 'jwt-decode'
 
 var location = window.location.href.split('/')
 var pageID = location[location.length-1]
@@ -12,13 +14,20 @@ class Details extends Component {
     state = {
         isLive: false,
         isActive: false,
+        description: '',
         goal: '',
         dueDate: '',
         picArr: []
     }
 
     componentDidMount() {
-        this.props.getFundInfo()
+        const location = window.location.href
+        const id = location.split('/').slice(-1).join('')
+        this.props.getFundDetails(id)      
+    }
+
+    userForFund = (id) => {
+        this.props.user(id)
     }
 
     goLive = () => {
@@ -113,48 +122,78 @@ class Details extends Component {
         })          
     }
 
-    editProfile = () => {
-        console.log('edit')
+    handleServerEdit = (id, updatedDesc) => {
+        this.props.handleServerEditApi(id, updatedDesc)
+    }
+
+    requestAccess = () => {
+        console.log('requested')
     }
 
     donate = () => {
         console.log('donate')
     }
 
-    render() {
-        const token = localStorage.getItem('token')
-        const decoded = jwt_decode(token)      
+    render() {   
+        var name;
 
         let { funds } = this.props.fund
+        let { allUsers } = this.props.profile
+        allUsers.map(item => {
+            name = item.name
+        })
+
+        const token = localStorage.getItem('token')
+        const decoded = jwt_decode(token)
+
+        let userID = funds.map(item => {
+            return item.user
+        })
 
         let chosen = funds.map(item => {
             if(item._id === pageID) {
                 return (
-                    <div key={item._id}>
+                    <div key={item._id} onLoad={this.userForFund.bind(this, item.user)}>
                         <h2>{item.name}</h2>
                         <p style={{fontWeight: 'normal'}}>
                             Created by&nbsp;
-                            <a style={{color: '#168df5'}} href="/myProfile">{decoded.user.name}</a>
+                            <a style={{color: '#168df5'}} href="/myProfile">{name}</a>
                         </p>
                         <Thumbnails picArray={item.photo} />
-                        <div className="description" style={{marginBottom: '1rem'}}>
-                            <h3>Description</h3>
-                            <p style={{fontWeight: 'normal'}}>{item.description}</p>
-                        </div>
+                        {userID[0] === decoded.id ?
+                            <div className="description" style={{marginBottom: '1rem', marginTop: '4rem'}}>
+                                <h3>Description</h3>                          
+                                    <EditDetails 
+                                        item={item} 
+                                        goLive={this.state.isLive}
+                                        editFund={this.state.editFund}
+                                        desc={item.description} 
+                                        updateDesc={this.state.editFund} 
+                                        handleServerEdit={this.handleServerEdit}
+                                    />                                                                    
+                            </div> : ''
+                        }
                     </div>
                 )
             }
             return ''
-        })
+        }) 
 
         return (
             <div className="container" id="detailsContainer">
                 <div>{chosen}</div>
-                {!this.state.isLive ?
+
+                {userID[0] !== decoded.id ?
+                    <p style={{fontWeight: 'normal', textAlign: 'center', margin: 'auto 0'}}>
+                        You currently do not have access to this page.<br />
+                        Would you like to request access?<br />
+                        <span onClick={this.requestAccess} style={{color: 'green', cursor: 'pointer', fontWeight: 'bold'}}>Request</span>
+                    </p> :
+                    !this.state.isLive ?
                     <div id="detailBtns" className="buttons" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <button onClick={this.goLive}>Go Live</button>
-                        <button onClick={this.editProfile}>Edit Fund</button>
-                    </div> :
+                    </div> 
+                    :
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 'normal'}}>
                         <div style={{backgroundColor: '#EEE', padding: '1rem 1.5rem', fontSize: '2rem'}}>
                             <strong>$0</strong> of ${this.state.goal}
@@ -177,14 +216,15 @@ class Details extends Component {
                         </div>
                     </div>
                 }
-                       
+                  
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    fund: state.fund_state
+    fund: state.fund_state,
+    profile: state.profile_state
 })
 
-export default connect(mapStateToProps, { getFundInfo })(Details)
+export default connect(mapStateToProps, { getFundDetails, handleServerEditApi, addPhotos, user })(Details)

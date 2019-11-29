@@ -44,11 +44,9 @@ export const login = (user) => dispatch => {
         }
     }
 
-    Axios.post('/api/user/login', user, axiosConfig)
-    .then(response => {
-        console.log(response);
-        
-        const { token } = response.data.data
+    Axios.post('/user/login', user, axiosConfig)
+    .then(response => {      
+        const { token } = response.data
         setAuthJWT(token)
         localStorage.setItem('token', token)
 
@@ -59,7 +57,7 @@ export const login = (user) => dispatch => {
   
         dispatch({
             type: "LOG_IN",
-            payload: response.data.data
+            payload: response.data
         })     
     })
     .catch(err => console.log(JSON.stringify(err)))

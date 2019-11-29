@@ -93,8 +93,12 @@ export default class Dropzone extends Component {
             return <li key={index}>{item.name}</li>
         })
 
+        if(window.location.href === `http://localhost:3000/details/${this.props.id}`) {
+            console.log('details')
+        }
+
         return (
-            <div>
+            <div style={{width: '100%'}}>
                 <div  
                     className={`${this.state.highlight ? "Highlight" : "uploadBox"}`}
                     onDragOver={this.onDragOver}
@@ -118,9 +122,19 @@ export default class Dropzone extends Component {
                         onChange={this.onFilesAdded}
                     />
                 </div>
-                <ul className="nameList" style={{ margin: picsExist ? '2rem' : '0' }}>
-                    {nameList}
-                </ul>              
+                {
+                    window.location.href === `http://localhost:3000/details/${this.props.id}` ?
+                    <ul 
+                        style={{ 
+                            listStyleType: 'none'
+                        }}
+                    >
+                        {nameList}
+                    </ul> :
+                    <ul className="nameList" style={{ margin: picsExist ? '2rem' : '0' }}>
+                        {nameList}
+                    </ul> 
+                }                           
             </div>
         )
     }

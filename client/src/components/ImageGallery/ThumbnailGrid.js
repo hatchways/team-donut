@@ -5,9 +5,10 @@ import './thumbGrid.css'
 export default class ReplaceImg extends Component {    
     render() {
         let { thumbnails } = this.props
+        let numOfRows = Math.ceil(thumbnails.length / 5)
 
         return (
-            <div id="thumbnailGrid">
+            <div id="thumbnailGrid" style={{gridTemplateRows: `repeat(${numOfRows}, 7rem)`}}>
                 {
                     thumbnails.map((thumbnail, i) => {
                         return (

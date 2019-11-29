@@ -13,6 +13,7 @@ import Profiles from './components/Profiles';
 import MyProfile from './components/MyProfile';
 import TermsConditions from './components/TermsConditions';
 import Details from './components/Details/Details';
+import Funds from './components/OtherFunds/Funds';
 import './App.css';
 
 export default class App extends Component {
@@ -30,8 +31,9 @@ export default class App extends Component {
                             <Route exact path="/forgotPassword" component={PswdRecover} />
                             <Route exact path="/newFund" component={NewFund} />
                             <Route exact path="/messages" component={Messages} />
-                            <Route exact path="/funds" component={MyFunds} />
-                            <Route exact path="/profile" component={Profiles} />
+                            {/* <Route exact path="/myfunds" component={MyFunds} /> */}
+                            <Route exact path="/funds/:id" component={Funds} />
+                            <Route exact path="/profiles" component={Profiles} />
                             <Route exact path="/myProfile" component={MyProfile} />
                             <Route exact path="/termsConditions" component={TermsConditions} />
                             <Route exact path="/details/:id" component={Details} />

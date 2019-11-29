@@ -1,6 +1,8 @@
 #thumbnailGrid {
     display: grid;
-    grid-template-columns: repeat(5, 6rem);
+    grid-template-columns: repeat(5, 7rem);
     grid-gap: 13px;
     margin-top: 13px;
+    overflow-y: scroll;
+    height: 181px;
 }

@@ -1,10 +1,11 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { authReducer, fundReducer } from '../reducers';
+import { authReducer, fundReducer, profileReducer } from '../reducers';
 
 const reducers = combineReducers({
     auth_state: authReducer,
-    fund_state: fundReducer
+    fund_state: fundReducer,
+    profile_state: profileReducer
 })
 
 const initialState = {}

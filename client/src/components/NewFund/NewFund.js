@@ -14,8 +14,10 @@ import { signup, login } from '../../redux/actions/authActions';
 import { fundApi } from '../../redux/actions/fundActions';
 import { connect } from 'react-redux';
 import TimePicker from '../TimePicker';
+import jwt_decode from 'jwt-decode';
 
 var counter = 0;
+var userID;
 
 class NewFund extends Component {
     state = {
@@ -26,6 +28,11 @@ class NewFund extends Component {
         timeZone: '',
         photos: [],
         dateToISOStr: ''
+    }
+
+    componentDidMount() {
+        this.props.login(this.state)
+        console.log(this.props.user)
     }
 
     handleInput = (event) => {
@@ -114,10 +121,13 @@ class NewFund extends Component {
 
     };
 
-    submitForm = event => {
+    submitForm = (event) => {
         event.preventDefault();
-        this.props.fundApi(this.state)   
-        window.location.href = "/funds"      
+        this.props.fundApi(this.state) 
+        
+        const token = localStorage.getItem('token')
+        const decoded = jwt_decode(token)
+        window.location.href = `/myfunds`
     }
 
     timeDropdown = () => {   
@@ -147,8 +157,7 @@ class NewFund extends Component {
 		}, 3000 );
 	};
 
-    render() {
-        
+    render() {       
         return (
             <div>  
                 <h1>Create New Fund</h1>  
@@ -220,7 +229,8 @@ class NewFund extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    fund: state.fund_state
+    fund: state.fund_state,
+    user: state.auth_state
 })
 
 export default connect(mapStateToProps, { signup, login, fundApi })(NewFund)
