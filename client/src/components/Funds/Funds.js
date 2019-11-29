@@ -1,20 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { allUsers } from '../../redux/actions/profileActions'
 import { getFundInfo } from '../../redux/actions/fundActions'
-import './MyFunds.css'
+import './Funds.css'
 
-class MyFunds extends Component {
+class Funds extends Component {
     state = {}
 
     componentDidMount() {
-        this.props.getFundInfo()
+        let location = window.location.href
+        let id = location.split('/').slice(-1).join('')
+        this.props.getFundInfo(id)
     }
 
     detailsPage = (id) => {
         window.location.href = `/details/${id}`
     }
 
-    render() {
+    render() {     
         let { funds } = this.props.fund
 
         let fundsArr = funds.map((item, index) => {
@@ -38,7 +41,7 @@ class MyFunds extends Component {
                     placeholder="Search fund by name" 
                 />
                 <h2 id="fundHeading">
-                    My active funds&nbsp;
+                    Active funds&nbsp;
                     <span style={{fontWeight: 'normal', fontSize: '1.5rem', color: '#AAA'}}>
                         ({funds.length})
                     </span>
@@ -53,7 +56,8 @@ class MyFunds extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    profile: state.profile_state,
     fund: state.fund_state
 })
 
-export default connect(mapStateToProps, { getFundInfo })(MyFunds)
+export default connect(mapStateToProps, { allUsers, getFundInfo })(Funds)

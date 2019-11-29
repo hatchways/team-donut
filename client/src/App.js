@@ -8,12 +8,11 @@ import PswdRecover from './components/PswdRecover';
 import Header from './components/Header/Header';
 import NewFund from './components/NewFund/NewFund';
 import Messages from './components/Messages';
-import MyFunds from './components/MyFunds/MyFunds';
 import Profiles from './components/Profiles';
 import MyProfile from './components/MyProfile';
 import TermsConditions from './components/TermsConditions';
 import Details from './components/Details/Details';
-import Funds from './components/OtherFunds/Funds';
+import Funds from './components/Funds/Funds';
 import './App.css';
 
 export default class App extends Component {
@@ -31,7 +30,6 @@ export default class App extends Component {
                             <Route exact path="/forgotPassword" component={PswdRecover} />
                             <Route exact path="/newFund" component={NewFund} />
                             <Route exact path="/messages" component={Messages} />
-                            {/* <Route exact path="/myfunds" component={MyFunds} /> */}
                             <Route exact path="/funds/:id" component={Funds} />
                             <Route exact path="/profiles" component={Profiles} />
                             <Route exact path="/myProfile" component={MyProfile} />

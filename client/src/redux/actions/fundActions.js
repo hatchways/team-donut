@@ -110,3 +110,23 @@ export const handleServerEditApi = (id, currentState) => dispatch => {
         console.log(JSON.stringify(err))
     })
 }
+
+export const requestToFund = (yourID, theirFundID) => dispatch => {
+    let idObj = { theirFundID }
+
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*'
+        }
+    }
+
+    Axios.post(`/fund/requestfund/${yourID}`, idObj, axiosConfig)
+    .then(result => {
+        dispatch({
+            type: 'REQUEST',
+            payload: result.data
+        })
+    })
+    .catch(err => JSON.stringify(err))
+}

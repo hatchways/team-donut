@@ -13,24 +13,26 @@ export const signup = (newuser) => dispatch => {
     
     Axios.post('/api/user/register', newuser, axiosConfig)
     .then(resp => {
-        const { token } = resp.data.data
-        setAuthJWT(token)
+        console.log(resp)
         
-        let decoded = jwt_decode(token);
-        let userID = decoded.user.id;
-        let msg;
-        console.log(userID);
+        // const { token } = resp.data.data
+        // setAuthJWT(token)
+        
+        // let decoded = jwt_decode(token);
+        // let userID = decoded.user.id;
+        // let msg;
+        // console.log(userID);
 
-        window.location.href = "/"      
+        setTimeout(() => {
+            window.location.href = "/"
+        }, 1000)       
             
         dispatch({
             type: "SIGN_UP",
-            payload: resp.data.data,
-            message: msg
+            payload: resp.data
         })
     })
-    .catch(err => {
-        console.log(err);      
+    .catch(err => {      
         console.log(JSON.stringify(err))
     })
 
@@ -50,6 +52,8 @@ export const login = (user) => dispatch => {
         setAuthJWT(token)
         localStorage.setItem('token', token)
 
+        const decoded = jwt_decode(token)
+
         const tokenInStorage = localStorage.getItem('token');
         if(tokenInStorage) {
             window.location.href = "/myprofile"
@@ -57,18 +61,13 @@ export const login = (user) => dispatch => {
   
         dispatch({
             type: "LOG_IN",
-            payload: response.data
+            payload: decoded
         })     
     })
     .catch(err => console.log(JSON.stringify(err)))
 }
 
-export const logout = () => dispatch => {
+export const logout = () => {
     localStorage.removeItem('token')
-    setAuthJWT(null)
-
-    dispatch({
-        type: "LOG_OUT"
-    })
     window.location.href = "/"
 }

@@ -10,14 +10,13 @@ import {
 import Dropzone from '../Dropzone/Dropzone';
 import axios from 'axios'
 import $ from 'jquery'
-import { signup, login } from '../../redux/actions/authActions';
+import { signup } from '../../redux/actions/authActions';
 import { fundApi } from '../../redux/actions/fundActions';
 import { connect } from 'react-redux';
 import TimePicker from '../TimePicker';
 import jwt_decode from 'jwt-decode';
 
 var counter = 0;
-var userID;
 
 class NewFund extends Component {
     state = {
@@ -28,11 +27,6 @@ class NewFund extends Component {
         timeZone: '',
         photos: [],
         dateToISOStr: ''
-    }
-
-    componentDidMount() {
-        this.props.login(this.state)
-        console.log(this.props.user)
     }
 
     handleInput = (event) => {
@@ -127,7 +121,7 @@ class NewFund extends Component {
         
         const token = localStorage.getItem('token')
         const decoded = jwt_decode(token)
-        window.location.href = `/myfunds`
+        window.location.href = `/funds/${decoded.id}`
     }
 
     timeDropdown = () => {   
@@ -233,4 +227,4 @@ const mapStateToProps = (state) => ({
     user: state.auth_state
 })
 
-export default connect(mapStateToProps, { signup, login, fundApi })(NewFund)
+export default connect(mapStateToProps, { signup, fundApi })(NewFund)

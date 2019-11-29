@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    profilePic: {
+        type: String,
+        default: ''
+    },
     funds: [{
         type: Schema.Types.ObjectId,
         ref: 'fund'

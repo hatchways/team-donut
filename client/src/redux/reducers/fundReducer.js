@@ -32,6 +32,15 @@ export default (state = initialState, action) => {
             updated.funds.push(action.payload)           
             return updated;
 
+        case "REQUEST":
+            console.log(action.payload)
+            // let reqArr = action.payload.map(req => {
+            //     console.log(JSON.parse(req))
+            // })
+            // console.log(reqArr);
+            
+            return updated;
+
         default:
             return updated;
     }

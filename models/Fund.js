@@ -1,5 +1,6 @@
 //This code is of Fund-Model#10 branch
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const FundSchema = new mongoose.Schema({
     user: {
@@ -28,7 +29,15 @@ const FundSchema = new mongoose.Schema({
     },
     photo: {
         type: [String]
-    }
+    },
+    requests: [{
+        type: Schema.Types.ObjectId,
+        ref: 'requests'
+    }],
+    access: [{
+        type: Schema.Types.ObjectId,
+        ref: 'access'
+    }]
 });
 
 const Fund = mongoose.model('fund', FundSchema);

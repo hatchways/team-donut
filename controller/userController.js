@@ -3,6 +3,48 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 module.exports = {
+    register: (params) => {
+
+        return new Promise((resolve, reject) => {
+            User.findOne({email: params.email})
+            .then(user => {
+
+                if(user) {
+                    let error = {}
+                    error.message = 'Your account exists. Please log in.'
+                    error.status = 409
+                    reject(error)
+                } else {
+                    const newUser = new User({
+                        name: params.name,
+                        email: params.email,
+                        password: params.password
+                    });
+
+                    // passwords must be hashed for the login to compare passwords
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            if(err) {
+                                throw err
+                            } else {
+                                newUser.password = hash;
+                                newUser.save()
+                                .then(savedUser => {
+                                    resolve(savedUser)
+                                })
+                                .catch(err => {
+                                    reject(err)
+                                })
+                            }
+                        })
+                    })
+                }
+            })
+            .catch(error => reject(error))
+        })
+
+    },
+
     login: (params) => {
         const email = params.email;
         const password = params.password;
@@ -14,6 +56,7 @@ module.exports = {
                     let errors = {}
                     errors.email = "User not found";
                     errors.status = 400;
+                    console.log(errors)
                     reject(errors)
                 }
                 bcrypt.compare(password, user.password)
@@ -44,9 +87,15 @@ module.exports = {
                         reject(errors);
                     }
                 })
-                .catch(err => reject(err))
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
             })
-            .catch(err => reject(err))
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
         })
     },
 

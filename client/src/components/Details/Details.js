@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { user } from '../../redux/actions/profileActions'
-import { getFundDetails, handleServerEditApi, addPhotos } from '../../redux/actions/fundActions'
+import { getFundDetails, handleServerEditApi, addPhotos, requestToFund } from '../../redux/actions/fundActions'
 import './Details.css'
 import Thumbnails from '../ImageGallery/Thumbnails'
 import EditDetails from '../Details/EditDetails'
@@ -126,9 +126,17 @@ class Details extends Component {
         this.props.handleServerEditApi(id, updatedDesc)
     }
 
-    requestAccess = () => {
-        console.log('requested')
+    requestAccess = (yourID, theirFundID) => {
+        this.props.requestToFund(yourID, theirFundID)
     }
+
+    // picSettings = () => {
+    //     let setBtn = document.createElement('button')
+    //     setBtn.innerHTML = 'btn'
+    //     setBtn.style.cssText = 'zIndex:1; background-color:black; color:white'
+    //     console.log(setBtn)
+    //     console.log('working')
+    // }
 
     donate = () => {
         console.log('donate')
@@ -159,7 +167,7 @@ class Details extends Component {
                             Created by&nbsp;
                             <a style={{color: '#168df5'}} href="/myProfile">{name}</a>
                         </p>
-                        <Thumbnails picArray={item.photo} />
+                        <Thumbnails onMouseOver={this.picSettings} picArray={item.photo} />
                         {userID[0] === decoded.id ?
                             <div className="description" style={{marginBottom: '1rem', marginTop: '4rem'}}>
                                 <h3>Description</h3>                          
@@ -178,6 +186,8 @@ class Details extends Component {
             }
             return ''
         }) 
+        const location = window.location.href
+        const fundID = location.split('/').slice(-1).join('')
 
         return (
             <div className="container" id="detailsContainer">
@@ -187,7 +197,7 @@ class Details extends Component {
                     <p style={{fontWeight: 'normal', textAlign: 'center', margin: 'auto 0'}}>
                         You currently do not have access to this page.<br />
                         Would you like to request access?<br />
-                        <span onClick={this.requestAccess} style={{color: 'green', cursor: 'pointer', fontWeight: 'bold'}}>Request</span>
+                        <span onClick={this.requestAccess.bind(this, decoded.id, fundID)} style={{color: 'green', cursor: 'pointer', fontWeight: 'bold'}}>Request</span>
                     </p> :
                     !this.state.isLive ?
                     <div id="detailBtns" className="buttons" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -227,4 +237,4 @@ const mapStateToProps = (state) => ({
     profile: state.profile_state
 })
 
-export default connect(mapStateToProps, { getFundDetails, handleServerEditApi, addPhotos, user })(Details)
+export default connect(mapStateToProps, { getFundDetails, handleServerEditApi, addPhotos, user, requestToFund })(Details)

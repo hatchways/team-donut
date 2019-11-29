@@ -2,6 +2,7 @@
 
 const User = require('../models/User');
 const Fund = require('../models/Fund');
+const Requests = require('../models/Requests');
 
 module.exports = {
     funds: (id, params) => {  
@@ -102,6 +103,51 @@ module.exports = {
                 })
                 .catch(err => reject(err))
             })
+        })
+    },
+
+    requestFund: (id, idObj) => {
+        return new Promise((resolve, reject) => {
+            
+            // Target the Fund model
+            // push which userID is doing the request
+                // push the userID into THEIR request array in the fund model
+
+            Fund.findOne({_id: idObj.theirFundID})
+            .then(theirs => {              
+
+                User.findOne({_id: id})
+                .then(user => {
+                    theirs.requests.push(user)
+
+                    theirs.requests.map(item => {
+                        console.log(item)
+                        
+                        User.findOne({_id: item})
+                        .then(result => {
+                            console.log(result)
+                            resolve(result)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+
+                    theirs.save()
+                    .then(saved => {
+                        console.log(saved)
+                        resolve(saved)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject(err)
+                    })
+                })
+                .catch(err => reject(err))
+                
+            })
+            .catch(err => reject(err))
         })
     }
 }

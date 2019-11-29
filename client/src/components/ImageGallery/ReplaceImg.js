@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 
 export default class ReplaceImg extends Component {
+    // picSettings = () => {
+    //     let setBtn = document.createElement('button')
+    //     setBtn.innerHTML = 'btn'
+    //     setBtn.style.cssText = 'zIndex:1; background-color:black; color:white'
+    //     console.log(setBtn)
+    //     console.log('working')
+    // }
+
     render() {
         let { activeThumbnail } = this.props
 
         return (
-            <div className="smallerPic" style={styles}>
+            <div className="smallerPic" onMouseOver={this.picSettings} style={styles}>
                 <img 
                     alt=""
                     src={activeThumbnail} 

@@ -52,6 +52,16 @@ router.post('/addphotos/:id', (req, res) => {
     .catch(err => {
         res.status(400).json(err)
     })
-})
+});
+
+router.post('/requestfund/:id', (req, res) => {
+    fundController.requestFund(req.params.id, req.body)
+    .then(fund => {
+        res.json(fund)
+    })
+    .catch(err => {
+        res.status(400).json(err)
+    })
+});
 
 module.exports = router;
