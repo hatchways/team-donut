@@ -1,7 +1,9 @@
 var initialState = {
     name: '',
     email: '',
-    message: ''
+    password: '',
+    message: '',
+    user_id: null
 }
 
 export default (state = initialState, action) => {
@@ -15,8 +17,13 @@ export default (state = initialState, action) => {
             updated.message = action.message
             return updated;
 
-        case "LOG_IN": 
-            console.log(action.payload)           
+        case "LOG_IN":            
+            updated.email = action.payload.email
+            console.log(updated)
+            return updated;
+
+        case "LOG_IN_CHECK":
+            updated.user_id = action.payload.id
             updated.email = action.payload.email
             return updated;
 

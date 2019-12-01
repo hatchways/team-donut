@@ -1,6 +1,4 @@
 import Axios from './Axios/Axios';
-import jwt_decode from 'jwt-decode';
-import setAuthJWT from './Axios/setAuthJWT';
 
 export const allUsers = () => dispatch => {
     Axios.get('/user/allusers')

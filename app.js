@@ -5,10 +5,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-var user = require('./routes/api/user');
 var indexRouter = require('./routes/index');
 var pingRouter = require('./routes/ping');
-var profileRouter = require('./routes/api/profile');
+var profileRouter = require('./routes/profile');
 var methodOverride = require('method-override');
 var userRouter = require('./routes/user');
 var fund = require('./routes/fund');
@@ -42,8 +41,7 @@ app.use(methodOverride('_method'))
 
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
-app.use('/api/user', user);
-app.use('/api/profile', profileRouter);
+app.use('/profile', profileRouter);
 app.use('/fund', fund);
 app.use('/user', userRouter);
 

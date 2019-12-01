@@ -66,7 +66,7 @@ export const addPhotos = (id, pic) => dispatch => {
     })
 }
 
-export const getFundInfo = (id) => dispatch => {
+export const getFundInfo = (id) => dispatch => { 
     Axios.get(`/fund/fundinfo/${id}`)
     .then(funds => {
         dispatch({
@@ -77,8 +77,8 @@ export const getFundInfo = (id) => dispatch => {
     .catch(err => console.log(JSON.stringify(err)))
 }
 
-export const getFundDetails = (id) => dispatch => {
-    Axios.get(`/fund/funddetails/${id}`)
+export const getFundDetails = (userID, fundID) => dispatch => {   
+    Axios.get(`/fund/funddetails/${userID}?fundID=${fundID}`)
     .then(funds => {
         dispatch({
             type: "DETAILS",

@@ -1,10 +1,9 @@
 const User = require('../models/User');
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
     register: (params) => {
-
         return new Promise((resolve, reject) => {
             User.findOne({email: params.email})
             .then(user => {
@@ -21,23 +20,14 @@ module.exports = {
                         password: params.password
                     });
 
-                    // passwords must be hashed for the login to compare passwords
-                    bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(newUser.password, salt, (err, hash) => {
-                            if(err) {
-                                throw err
-                            } else {
-                                newUser.password = hash;
-                                newUser.save()
-                                .then(savedUser => {
-                                    resolve(savedUser)
-                                })
-                                .catch(err => {
-                                    reject(err)
-                                })
-                            }
-                        })
+                    newUser.save()
+                    .then(savedUser => {
+                        resolve(savedUser)
                     })
+                    .catch(err => {
+                        reject(err)
+                    })
+
                 }
             })
             .catch(error => reject(error))
@@ -46,21 +36,26 @@ module.exports = {
     },
 
     login: (params) => {
+        console.log(params);
+        
         const email = params.email;
         const password = params.password;
 
         return new Promise((resolve, reject) => {
             User.findOne({email})
             .then(user => {
+
                 if(!user) {
                     let errors = {}
                     errors.email = "User not found";
                     errors.status = 400;
-                    console.log(errors)
                     reject(errors)
                 }
+
                 bcrypt.compare(password, user.password)
                 .then(isMatch => {
+                    console.log(isMatch)
+                    
                     if(isMatch) {
                         const payload = {
                             id: user._id,
@@ -71,10 +66,7 @@ module.exports = {
                         jwt.sign(payload, process.env.SECRET_KEY, {
                             expiresIn: 3600
                         }, (err, token) => {
-                            if(err) {
-                                console.log(err)
-                                reject(err)
-                            }
+                            if(err) { reject(err) }
                             let success = {}
                             success.confirmation = true;
                             success.token = `Bearer ${token}`
@@ -87,15 +79,9 @@ module.exports = {
                         reject(errors);
                     }
                 })
-                .catch(err => {
-                    console.log(err)
-                    reject(err)
-                })
+                .catch(err => console.log(JSON.stringify(err)))
             })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
+            .catch(err => console.log(JSON.stringify(err)))
         })
     },
 

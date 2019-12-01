@@ -21,9 +21,12 @@ class Details extends Component {
     }
 
     componentDidMount() {
+        const token = localStorage.getItem('token')
+        const decoded = jwt_decode(token)
+
         const location = window.location.href
         const id = location.split('/').slice(-1).join('')
-        this.props.getFundDetails(id)      
+        this.props.getFundDetails(decoded.id, id)      
     }
 
     userForFund = (id) => {

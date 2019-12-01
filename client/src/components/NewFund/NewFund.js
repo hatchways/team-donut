@@ -74,7 +74,7 @@ class NewFund extends Component {
             for ( let i = 0; i < fileArray.length; i++ ) {
                 data.append( 'imageGallery', fileArray[i], fileArray[i].name );
             }
-            axios.post( 'http://localhost:3001/api/profile/multiple-file-upload', data, {
+            axios.post( 'http://localhost:3001/profile/multiple-file-upload', data, {
                 headers: {
                     'accept': 'application/json',
                     'Accept-Language': 'en-US,en;q=0.8',

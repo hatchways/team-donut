@@ -30,7 +30,6 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log(this.props.user);
     
     return (
       <div style={{ display: 'flex' }}>

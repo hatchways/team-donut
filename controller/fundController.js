@@ -28,15 +28,18 @@ module.exports = {
                         resolve(savedFund)
                     })
                     .catch(err => {
+                        console.log(err)
                         reject(err)
                     })
                 })
                 .catch(err => {
+                    console.log(err)
                     reject(err)
                 })           
                 
             }) 
             .catch(err => {
+                console.log(err)
                 reject(err)
             })
         })  
@@ -53,11 +56,18 @@ module.exports = {
         })
     },
 
-    getFundDetails: (id) => {
+    getFundDetails: (userID, fundID) => {
         return new Promise((resolve, reject) => {
-            Fund.findOne({_id: id})
-            .then(result => resolve(result))
-            .catch(err => reject(err))
+            console.log(userID, fundID);
+
+            User.findOne({_id: userID})
+            .then(() => {
+                Fund.findOne({_id: fundID})
+                .then(result => resolve(result))
+                .catch(err => reject(err))
+            })
+            .catch(err => reject(err))           
+
         })
     },
 
@@ -114,37 +124,38 @@ module.exports = {
                 // push the userID into THEIR request array in the fund model
 
             Fund.findOne({_id: idObj.theirFundID})
-            .then(theirs => {              
+            .then(theirs => {     
+                console.log(theirs)         
 
-                User.findOne({_id: id})
-                .then(user => {
-                    theirs.requests.push(user)
+                // User.findOne({_id: id})
+                // .then(user => {
+                //     theirs.requests.push(user)
 
-                    theirs.requests.map(item => {
-                        console.log(item)
+                //     theirs.requests.map(item => {
+                //         console.log(item)
                         
-                        User.findOne({_id: item})
-                        .then(result => {
-                            console.log(result)
-                            resolve(result)
-                        })
-                        .catch(err => {
-                            console.log(err)
-                            reject(err)
-                        })
-                    })
+                //         User.findOne({_id: item})
+                //         .then(result => {
+                //             console.log(result)
+                //             resolve(result)
+                //         })
+                //         .catch(err => {
+                //             console.log(err)
+                //             reject(err)
+                //         })
+                //     })
 
-                    theirs.save()
-                    .then(saved => {
-                        console.log(saved)
-                        resolve(saved)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        reject(err)
-                    })
-                })
-                .catch(err => reject(err))
+                //     theirs.save()
+                //     .then(saved => {
+                //         console.log(saved)
+                //         resolve(saved)
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //         reject(err)
+                //     })
+                // })
+                // .catch(err => reject(err))
                 
             })
             .catch(err => reject(err))

@@ -2,25 +2,29 @@ import React, { Component } from 'react'
 import '../App.css';
 import babyFund from './images/babyFund.png';
 import { Link } from 'react-router-dom';
-import { login } from '../redux/actions/authActions';
+import { login, checkIfUserLoggedIn } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
 class Login extends Component {
   state = {}
+
+  componentDidMount() {
+    let token = localStorage.getItem('token')
+    if(token) {
+      let decoded = jwt_decode(token)
+      this.props.checkIfUserLoggedIn(decoded)
+      this.props.checkIfUserLoggedIn()
+    }
+  }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit = event => {
-    event.preventDefault();
-
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
-    }
-
-    this.props.login(userData)
+    event.preventDefault();  
+    this.props.login(this.state)
   }
 
   signup = () => {
@@ -39,12 +43,24 @@ class Login extends Component {
 
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" className="form-control" name='email' onChange={this.handleChange} placeholder="Enter email" />
+              <input 
+                type="email" 
+                className="form-control" 
+                name='email' 
+                onChange={this.handleChange} 
+                placeholder="Enter email" 
+              />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" className="form-control" name='password' onChange={this.handleChange} placeholder="Password" />
+              <input 
+                type="password" 
+                className="form-control" 
+                name='password' 
+                onChange={this.handleChange} 
+                placeholder="Password" 
+              />
             </div>
 
             <Link to="/forgotPassword" style={{ color: 'black' }}>Forgot Password?</Link>
@@ -67,5 +83,5 @@ const mapStateToProps = (state) => ({
   user: state.auth_state
 })
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login, checkIfUserLoggedIn })(Login)
 

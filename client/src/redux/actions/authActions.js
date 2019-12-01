@@ -11,7 +11,7 @@ export const signup = (newuser) => dispatch => {
         }
     }
     
-    Axios.post('/api/user/register', newuser, axiosConfig)
+    Axios.post('/user/register', newuser, axiosConfig)
     .then(resp => {
         console.log(resp)
         
@@ -39,35 +39,48 @@ export const signup = (newuser) => dispatch => {
 }
 
 export const login = (user) => dispatch => {
-    let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*'
+    if(user !== undefined) {
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Access-Control-Allow-Origin': '*'
+            }
         }
+    
+        Axios.post('/user/login', user, axiosConfig)
+        .then(response => {     
+            const { token } = response.data
+            setAuthJWT(token)
+            localStorage.setItem('token', token)
+    
+            const decoded = jwt_decode(token)
+            
+            const tokenInStorage = localStorage.getItem('token');
+            if(tokenInStorage) {
+                window.location.href = "/myprofile"
+            }
+      
+            dispatch({
+                type: "LOG_IN",
+                payload: decoded
+            })     
+        })
+        .catch(err => console.log(JSON.stringify(err)))
     }
+}
 
-    Axios.post('/user/login', user, axiosConfig)
-    .then(response => {      
-        const { token } = response.data
-        setAuthJWT(token)
-        localStorage.setItem('token', token)
+export const checkIfUserLoggedIn = () => dispatch => {
+    const token = localStorage.getItem('token')
+    const decoded = jwt_decode(token)
 
-        const decoded = jwt_decode(token)
-
-        const tokenInStorage = localStorage.getItem('token');
-        if(tokenInStorage) {
-            window.location.href = "/myprofile"
-        }
-  
-        dispatch({
-            type: "LOG_IN",
-            payload: decoded
-        })     
+    dispatch({
+        type: "LOG_IN_CHECK",
+        payload: decoded
     })
-    .catch(err => console.log(JSON.stringify(err)))
 }
 
 export const logout = () => {
     localStorage.removeItem('token')
+    setAuthJWT(null)
     window.location.href = "/"
 }

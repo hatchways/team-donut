@@ -25,7 +25,7 @@ router.get('/fundinfo/:id', (req, res) => {
 });
 
 router.get('/funddetails/:id', (req, res) => {
-    fundController.getFundDetails(req.params.id)
+    fundController.getFundDetails(req.params.id, req.query.fundID)
     .then(fund => {
         res.json(fund)
     })
